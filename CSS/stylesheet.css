@@ -85,6 +85,18 @@ h4 {
 .input:focus {
   outline: none;
 }
+
+#add-shelf {
+  background-color: #FF0000;
+  border-bottom: hidden;
+  border-top: hidden;
+  border-right: hidden;
+  border-left: hidden;
+}
+#add-shelf:focus {
+  outline: none;
+}
+
 ::-webkit-input-placeholder { 
     color:    #0971B2;
 }

@@ -52,6 +52,10 @@ var save = function() {
 
 var render = function() {
   $('#library').empty();
+  $('#select-shelf').empty();
+  $.each(campBecca.shelf, function(i, val) {
+    $('#select-shelf').append('<h3><input type=\"radio\" name="shelf" value=' + campBecca.shelf[i] + '>' + campBecca.shelf[i].subject + '</h3>');
+  });
   $.each(campBecca.shelf, function(i, val) {
     $('#library').append('<li class=\"shelf\" id=\"campBecca' + i + '\"><h2>' + campBecca.shelf[i].subject + '</h2></li>');
     $.each(campBecca.shelf[i].book, function(j, val) {
@@ -88,3 +92,7 @@ if (localStorage.campBecca) {
 
 render();
 console.log("done");
+
+// $.each(campBecca.shelf, function(i, val) {
+//   $('#select-shelf').append('<input type=\"radio\" name="shelf" value=' + campBecca.shelf[i] + '><h3>' + campBecca.shelf[i] + '</h3><br>');
+// });
