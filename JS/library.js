@@ -22,7 +22,7 @@ Library.prototype.addShelf = function (newShelf) {
 
 Library.prototype.removeShelf = function (oldShelf) {
   for (var i = 0; i < this.shelf.length; i++) {
-    if (oldShelf == this.shelf[i]) {
+    if (oldShelf == this.shelf[i].subject) {
       this.shelf.splice(i,1);
       render();
       break;
@@ -62,12 +62,12 @@ var render = function() {
       $('#campBecca' + i).append('<h3 class\"book\">\"' + campBecca.shelf[i].book[j].title + '\" by ' + campBecca.shelf[i].book[j].author + '</h3>')
     })
   })
-  save();
+  save()
 };
 
-if (localStorage.campBecca) {
-  var campBecca = JSON.parse(localStorage.campBecca);
-} else {
+// if (localStorage.campBecca) {
+//   var campBecca = JSON.parse(localStorage.campBecca);
+// } else {
   var campBecca = new Library("Camp Becca");
   var philosophy = new Shelf("Philosophy");
   var dogStories = new Shelf("Books about dogs");
@@ -88,11 +88,24 @@ if (localStorage.campBecca) {
   dogStories.addBook(lassie);
   plush.addBook(pooh);
   plush.addBook(caterpillar);  
-};
+// };
 
 render();
 console.log("done");
 
-// $.each(campBecca.shelf, function(i, val) {
-//   $('#select-shelf').append('<input type=\"radio\" name="shelf" value=' + campBecca.shelf[i] + '><h3>' + campBecca.shelf[i] + '</h3><br>');
-// });
+$('#add-shelf').on({'click': function() {
+  if ($('#subject').val() !== "") {
+    console.log($('#subject').val());
+    var userShelf = new Shelf($('#subject').val());
+    campBecca.addShelf(userShelf);
+    render();
+  }
+}});
+
+$('#remove-shelf').on({'click': function() {
+  if ($('#subject').val() !== "") {
+    console.log($('#subject').val());
+    campBecca.removeShelf($('#subject').val());
+    render();
+  }
+}});

@@ -50,6 +50,7 @@ h4 {
   top: 100px;
   list-style-type: none;
   z-index: -10;
+  margin: 0px 100px 125px 25px;
 }
 
 .console-bar {
@@ -81,21 +82,52 @@ h4 {
   border-top: hidden;
   border-right: hidden;
   border-left: hidden;
+  font-family: sans-serif;
+  font-size: 14px;
+  color: #FFFC19;
+
 }
 .input:focus {
   outline: none;
 }
 
-#add-shelf {
+.add {
+  top: 0px;
+  position: relative;
+  float: right;
   background-color: #FF0000;
   border-bottom: hidden;
   border-top: hidden;
   border-right: hidden;
   border-left: hidden;
 }
-#add-shelf:focus {
+.add:hover {
   outline: none;
+  -webkit-animation:spin 4s linear infinite;
+  -moz-animation:spin 4s linear infinite;
+  animation:spin 4s linear infinite;
 }
+
+.remove {
+  bottom: 0px;
+  position: relative;
+  float: right;
+  background-color: #FF0000;
+  border-top: hidden;
+  border-right: hidden;
+  border-bottom: hidden;
+  border-left: hidden;
+}
+.remove:hover {
+  outline: none;
+  -webkit-animation:spin 4s linear infinite;
+  -moz-animation:spin 4s linear infinite;
+  animation:spin 4s linear infinite;
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
 
 ::-webkit-input-placeholder { 
     color:    #0971B2;
