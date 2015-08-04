@@ -37,7 +37,7 @@ Shelf.prototype.addBook = function (newBook) {
 
 Shelf.prototype.removeBook = function (oldBook) {
   for (var i = 0; i < this.book.length; i++) {
-    if (oldShelf == this.book[i]) {
+    if (oldBook == this.book[i].title) {
       this.book.splice(i,1);
       render();
       break;
@@ -45,16 +45,17 @@ Shelf.prototype.removeBook = function (oldBook) {
   }
 };
 
-var save = function() {
-    var session = JSON.stringify(campBecca);
-    localStorage.campBecca = session;
-};
+// THIS LOCAL STORAGE APPROACH DOESN'T WORK. NEED SOMETHING MORE SOPHISTICATED.
+// var save = function() {
+//     var session = JSON.stringify(campBecca);
+//     localStorage.campBecca = session;
+// };
 
 var render = function() {
   $('#library').empty();
   $('#select-shelf').empty();
   $.each(campBecca.shelf, function(i, val) {
-    $('#select-shelf').append('<h3><input type=\"radio\" name="shelf" value=' + campBecca.shelf[i] + '>' + campBecca.shelf[i].subject + '</h3>');
+    $('#select-shelf').append('<h3><input type=\"radio\" name="shelf" value=\"' + campBecca.shelf[i].subject + '\">' + campBecca.shelf[i].subject + '</h3>');
   });
   $.each(campBecca.shelf, function(i, val) {
     $('#library').append('<li class=\"shelf\" id=\"campBecca' + i + '\"><h2>' + campBecca.shelf[i].subject + '</h2></li>');
@@ -62,7 +63,7 @@ var render = function() {
       $('#campBecca' + i).append('<h3 class\"book\">\"' + campBecca.shelf[i].book[j].title + '\" by ' + campBecca.shelf[i].book[j].author + '</h3>')
     })
   })
-  save()
+  // save()
 };
 
 // if (localStorage.campBecca) {
@@ -109,3 +110,46 @@ $('#remove-shelf').on({'click': function() {
     render();
   }
 }});
+
+  // $('#add-book').on({'click': function() {
+  //   console.log(!(($('#title').val()) == "" && ($('author').val() == "")));
+  //   console.log($("input:radio[name=shelf]").val() !== "");
+  //   if (!(($('#title').val()) == "" && ($('author').val() == "")) && $("input:radio[name=shelf]").val() !== "") {
+  //     $("input:radio[name=shelf]").on.click(function() {
+  //       console.log($(this).val());
+  //       var destinationShelf = $(this).val();
+  //       console.log(destinationShelf);
+  //       var userBook = new Book($('#title').val(), $('#author').val());
+  //       console.log(userBook);
+  //       destinationShelf.addBook(userBook);
+  //       render();
+  //     }
+  //   )}
+  // }});
+
+//this works for selecting items with the radio buttons.
+//   $("input:radio[name=shelf]").on({'click': function() {
+//     var destinationShelf = $(this).val();
+//     console.log(destinationShelf);
+//     if (!(($('#title').val()) == "" && ($('#author').val() == ""))) {
+//       console.log("First pass");
+//       $('#add-book').on({'click': function() {
+//         var userBook = new Book(('#title').val(), ('#author').val());
+//         console.log(userBook);
+//         destinationShelf.addBook(userBook);
+//         render();
+//       }})
+//     }
+//   }
+// });
+
+
+//   if (!(($('#title').val()) == "" && ($('author').val() == "")) && $("input:radio[name=shelf]").val() !== "") {
+//     ().addBook($('#title').val(), $('#author').val());
+//     render();
+//   }  
+// }});
+
+  // $("input:radio[name=shelf]").click(function() {
+  //     var destinationShelf = $(this).val();
+  // });

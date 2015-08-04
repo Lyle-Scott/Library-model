@@ -101,7 +101,7 @@ h4 {
   border-right: hidden;
   border-left: hidden;
 }
-.add:hover {
+.add:hover, .add:focus {
   outline: none;
   -webkit-animation:spin 4s linear infinite;
   -moz-animation:spin 4s linear infinite;
@@ -118,7 +118,7 @@ h4 {
   border-bottom: hidden;
   border-left: hidden;
 }
-.remove:hover {
+.remove:hover, .remove:focus {
   outline: none;
   -webkit-animation:spin 4s linear infinite;
   -moz-animation:spin 4s linear infinite;
@@ -127,7 +127,6 @@ h4 {
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
-
 
 ::-webkit-input-placeholder { 
     color:    #0971B2;
