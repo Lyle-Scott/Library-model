@@ -1,0 +1,105 @@
+header {
+  position: fixed;
+  background-color: #FF0000;
+  margin: 10px 10px 10px 10px;
+  padding: 0px 10px 0px 50px;
+  width: 50%;
+  text-align: left;
+  border-color: #B21212;
+  border-width: 5px;
+  border-style: solid;
+}
+
+body {
+  background-color: #1485CC;
+}
+
+h1 {
+  text-align: left;
+  font-family: courier;
+  font-size: 30px;
+  color: #FFFC19;
+}
+
+h2 {
+  text-align: left;
+  font-family: courier;
+  font-size: 20px;
+  color: #FFFC19;
+}
+
+h3 {
+  /*text-align: left;*/
+  font-family: sans-serif;
+  font-size: 14px;
+  color: #FFFC19;
+  margin-left: 25px;
+}
+
+h4 {
+  text-align: left;
+  font-family: courier;
+  font-size: 20px;
+  color: #FFFC19;
+  margin-top: 0px;
+}
+
+#library {
+  position: absolute;
+  float: left;
+  top: 100px;
+  list-style-type: none;
+}
+
+.console-bar {
+  position: fixed;
+  bottom: 20px;
+  background-color: #FF0000;
+  margin: 10px 10px 10px 10px;
+  padding: 0px 10px 10px 10px;
+  width: 30%;
+  text-align: left;
+  border-color: #B21212;
+  border-width: 5px;
+  border-style: solid;
+}
+
+#shelves {
+  float: left
+  left 20px;
+}
+
+#books {
+  float: right;
+  right: 20px;
+}
+
+.input{
+  background-color: #FF0000;
+  border-bottom: solid #B21212;
+  border-top: hidden;
+  border-right: hidden;
+  border-left: hidden;
+}
+.input:focus {
+  outline: none;
+}
+::-webkit-input-placeholder { 
+    color:    #0971B2;
+}
+:-moz-placeholder { 
+   color:    #0971B2;
+}
+::-moz-placeholder { 
+   color:    #0971B2;
+}
+:-ms-input-placeholder { 
+   color: #0971B2;
+}
+
+
+B21212 dark red
+FFFC19 yellow
+FF0000 light red 
+1485CC light blue
+0971B2 dark blue
