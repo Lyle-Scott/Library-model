@@ -15,6 +15,21 @@ var Book = function(title, author) {
   this.author = author;
 };
 
+Book.prototype.shelve = function(place) {
+  place.book.push(this);
+  render();
+};
+
+Book.prototype.unshelve = function(place) {
+  for (var i =0; i < place.book.length; i++) {
+    if (this == place.book[i]) {
+      place.book.splice(i,1);
+      render();
+      break;
+    }
+  }
+};
+
 Library.prototype.addShelf = function (newShelf) {
   this.shelf.push(newShelf);
   render();
@@ -111,9 +126,9 @@ $('#remove-shelf').on({'click': function() {
   }
 }});
 
-  // $('#add-book').on({'click': function() {
-  //   console.log(!(($('#title').val()) == "" && ($('author').val() == "")));
-  //   console.log($("input:radio[name=shelf]").val() !== "");
+  $('#add-book').on({'click': function() {
+  console.log(!(($('#title').val()) == "" && ($('author').val() == "")));
+  console.log($("input:radio[name=shelf]").val() !== "");
   //   if (!(($('#title').val()) == "" && ($('author').val() == "")) && $("input:radio[name=shelf]").val() !== "") {
   //     $("input:radio[name=shelf]").on.click(function() {
   //       console.log($(this).val());
@@ -127,21 +142,21 @@ $('#remove-shelf').on({'click': function() {
   //   )}
   // }});
 
-//this works for selecting items with the radio buttons.
-//   $("input:radio[name=shelf]").on({'click': function() {
-//     var destinationShelf = $(this).val();
-//     console.log(destinationShelf);
-//     if (!(($('#title').val()) == "" && ($('#author').val() == ""))) {
-//       console.log("First pass");
-//       $('#add-book').on({'click': function() {
-//         var userBook = new Book(('#title').val(), ('#author').val());
-//         console.log(userBook);
-//         destinationShelf.addBook(userBook);
-//         render();
-//       }})
-//     }
-//   }
-// });
+// this works for selecting items with the radio buttons.
+  $("input:radio[name=shelf]").on({'click': function() {
+    var destinationShelf = $(this).val();
+    console.log(destinationShelf);
+    if (!(($('#title').val()) == "" && ($('#author').val() == ""))) {
+      console.log("First pass");
+      $('#add-book').on({'click': function() {
+        var userBook = new Book($('#title').val(), $('#author').val());
+        console.log(userBook);
+        userBook.shelve($("input:radio[name=shelf]"))
+        render();
+      }})
+    }
+  }
+});
 
 
 //   if (!(($('#title').val()) == "" && ($('author').val() == "")) && $("input:radio[name=shelf]").val() !== "") {
