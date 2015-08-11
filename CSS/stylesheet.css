@@ -132,16 +132,16 @@ h4 {
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
 ::-webkit-input-placeholder { 
-    color:    #0971B2;
+    color:    #FFFC19;
 }
 :-moz-placeholder { 
-   color:    #0971B2;
+   color:    #FFFC19;
 }
 ::-moz-placeholder { 
-   color:    #0971B2;
+   color:    #FFFC19;
 }
 :-ms-input-placeholder { 
-   color: #0971B2;
+   color: #FFFC19;
 }
 
 
