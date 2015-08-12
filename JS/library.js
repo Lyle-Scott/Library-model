@@ -82,7 +82,7 @@ Book.prototype.unshelve = function () {
       break;
     }
   }
-  if (isUnshelved = false) {
+  if (isUnshelved == false) {
     unshelved.books.push(this);
     this.location = unshelved;
     isUnshelved = true
