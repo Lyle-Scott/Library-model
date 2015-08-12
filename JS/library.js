@@ -2,13 +2,13 @@
 
 var Library = function(branch) {
   this.branch = branch;
-  this.shelf = [];
+  this.shelves = [];
   this.index = [];
 };
 
 var Shelf = function(subject) {
   this.subject = subject;
-  this.book = [];
+  this.books = ["bookend"];
 };
 
 var Book = function(ID, title, author) {
@@ -19,13 +19,13 @@ var Book = function(ID, title, author) {
 };
 
 Shelf.prototype.addToLibrary = function (newLibrary) {
-  newLibrary.shelf.push(this);
+  newLibrary.shelves.push(this);
   render();
 };
 
 Shelf.prototype.removeFromLibrary = function (oldLibrary) {
   var i = this;
-  $.each(oldLibrary.shelf, function(j) {
+  $.each(oldLibrary.shelves, function(j) {
     if (i === this) {
       oldLibrary.shelf.splice(j,1);
       render(); 
@@ -34,47 +34,80 @@ Shelf.prototype.removeFromLibrary = function (oldLibrary) {
   })
 };
 
-Book.prototype.shelve = function(shelf) {
-  var i = this;
-  $.each(shelf.book, function(j) {
-    if (i === this) {
-      console.log("Book is already in this shelf.")
-      return(false);
-    }
-  })
-  shelf.book.push(this);
-    // needs loop to check if is already in library
-  campBecca.index.push(this);
-  this.location = shelf;
-  console.log(i.title, "is on shelf:", shelf.subject);
-  var temp = [];
-  $.each(campBecca.index, function (j) {
-    temp.push(campBecca.index[j].title);
-  });
-  console.log("Library index: ", temp)
-  render();
-};
+// Book.prototype.shelve = function(shelf) {
+//   var out = false;
+//   var i = this;
+//   for (var j = 0; j < shelf.books.length; j++) {
+//     console.log(i, shelf.book[j]);
+//     if (i === shelf.book[j]) {
+//       console.log("Book is already on this shelf.");
+//       out = true;
+//       break;
+//     }
+//   }
+
+//   var out = true;
+//   var i = this;
+//   $.each(shelf.book, function(j, val) {
+//     console.log(i, val);
+//     if (i == val) {
+//       console.log("Book is already in this shelf.");
+//       out = false;
+//       return(out);
+//     };
+//     if (j == shelf.book.length-1) {
+//       shelf.book.push(this);
+//       out=false;
+//       return(out);
+//     }
+//   });
+//     // needs loop to check if is already in library
+//   campBecca.index.push(this);
+//   this.location = shelf;
+//   console.log(i.title, "is on shelf:", shelf.subject);
+//   var temp = [];
+//   $.each(campBecca.index, function (j) {
+//     temp.push(campBecca.index[j].title);
+//   });
+//   console.log("Library index: ", temp)
+//   render();
+// };
 
 Book.prototype.unshelve = function () {
-  var i = this;
-    $.each(unshelved.book, function(j) {
-    if (i === this) {
-      console.log("Book is already unshelved.")
-      return(false);
+  var isUnshelved = false;
+  for (i = 0; i = unshelved.book.length; i++) {
+    if (this === unshelved.book[i]) {
+      console.log("Book is already unshelved.");
+      isUnshelved = true;
+      break;
     }
-  })
-  unshelved.book.push(this);
-  // needs loop to check if is already in library
-  campBecca.index.push(this);
-  this.location = unshelved;
-  console.log(i.title, "is unshelved.");
-  var temp = [];
-  $.each(campBecca.index, function (j) {
-    temp.push(campBecca.index[j].title);
-  });
-  console.log("Library index: ", temp)
+  }
+  if (isUnshelved = false) {
+    unshelved.books.push(this);
+    this.location = unshelved;
+    isUnshelved = true
+    console.log(this.title, "has been unshelved.");
+    for (i = 0; i < campBecca.index.length; i++) {
+      if (this === campBecca.index.i) {
+      console.log("Book is already in the library index.")
+      }
+    }
+
+  // $.each(campBecca.index, function(j) {
+  //   if (i === this) {
+  //     return(false);
+  //   }
+  // });
+  // campBecca.index.push(this);
+  // // needs loop to check if is already in library
+  // this.location = unshelved;
+  // var temp = [];
+  // $.each(campBecca.index, function (j) {
+  //   temp.push(campBecca.index[j].title);
+  // });
+  // console.log("Library index: ", temp)
   render();
-};
+}};
 
 
 // Book.prototype.unshelve = function() {
@@ -104,8 +137,8 @@ var render = function() {
   });
   $.each(campBecca.shelf, function(i, val) {
     $('#library').append('<li class=\"shelf\" id=\"campBecca' + i + '\"><h2>' + campBecca.shelf[i].subject + '</h2></li>');
-    $.each(campBecca.shelf[i].book, function(j, val) {
-      $('#campBecca' + i).append('<h3 class\"book\">\"' + campBecca.shelf[i].book[j].title + '\" - ' + campBecca.shelf[i].book[j].author + '</h3>')
+    $.each(campBecca.shelf[i].books, function(j, val) {
+      $('#campBecca' + i).append('<h3 class\"book\">\"' + campBecca.shelf[i].books[j].title + '\" - ' + campBecca.shelf[i].books[j].author + '</h3>')
     })
   })
   // save()
