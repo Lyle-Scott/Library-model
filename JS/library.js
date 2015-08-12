@@ -1,235 +1,163 @@
 'use strict'
 
-var Library = function(branch) {
-  this.branch = branch;
-  this.shelves = [];
-  this.index = [];
+var unsorted = {title:"unsorted", type:"storage", ID:0, index:[]};
+
+var Library = function(title) {
+  this.type = "library";
+  this.title = title;
+  this.index = [unsorted];
+  this.IDList = [0];
 };
 
-var Shelf = function(subject) {
-  this.subject = subject;
-  this.books = ["bookend"];
+var LibraryItem = function() {
+  this.ID;
+  this.location = unsorted;
 };
 
-var Book = function(ID, title, author) {
-  this.ID = ID;
+var checkIn = function (libraryItem) { 
+  libraryItem.ID = (campBecca.IDList.length);
+  campBecca.IDList.push(libraryItem);
+  unsorted.index.push(libraryItem);
+};
+
+LibraryItem.prototype.AssignBook = function (title, author) {
+  this.type = "book";
   this.title = title;
   this.author = author;
-  this.location = unshelved;
+  checkIn(this);
 };
 
-Shelf.prototype.addToLibrary = function (newLibrary) {
-  newLibrary.shelves.push(this);
-  render();
+LibraryItem.prototype.AssignMagazine = function (title, month, year) {
+  this.type = "magazine";
+  this.title = title;
+  this.month = month;
+  this.year = year;
+  checkIn(this);
+}
+
+LibraryItem.prototype.AssignCD = function (title, artist) {
+  this.type = "CD";
+  this.title = title;
+  checkIn(this);
+}
+
+LibraryItem.prototype.AssignShelf = function (title) {
+  this.type = "shelf";
+  this.title = title;
+  this.index = [];
+  checkIn(this);
 };
 
-Shelf.prototype.removeFromLibrary = function (oldLibrary) {
-  var i = this;
-  $.each(oldLibrary.shelves, function(j) {
-    if (i === this) {
-      oldLibrary.shelf.splice(j,1);
-      render(); 
-    }
-    return(i !== this);
-  })
-};
+LibraryItem.prototype.AssignBox = function (title) {
+  this.type = "box";
+  this.title = title;
+  this.index = [];
+  checkIn(this);
+}
 
-// Book.prototype.shelve = function(shelf) {
-//   var out = false;
-//   var i = this;
-//   for (var j = 0; j < shelf.books.length; j++) {
-//     console.log(i, shelf.book[j]);
-//     if (i === shelf.book[j]) {
-//       console.log("Book is already on this shelf.");
-//       out = true;
-//       break;
-//     }
-//   }
-
-//   var out = true;
-//   var i = this;
-//   $.each(shelf.book, function(j, val) {
-//     console.log(i, val);
-//     if (i == val) {
-//       console.log("Book is already in this shelf.");
-//       out = false;
-//       return(out);
-//     };
-//     if (j == shelf.book.length-1) {
-//       shelf.book.push(this);
-//       out=false;
-//       return(out);
-//     }
-//   });
-//     // needs loop to check if is already in library
-//   campBecca.index.push(this);
-//   this.location = shelf;
-//   console.log(i.title, "is on shelf:", shelf.subject);
-//   var temp = [];
-//   $.each(campBecca.index, function (j) {
-//     temp.push(campBecca.index[j].title);
-//   });
-//   console.log("Library index: ", temp)
-//   render();
-// };
-
-Book.prototype.unshelve = function () {
-  var isUnshelved = false;
-  for (i = 0; i = unshelved.book.length; i++) {
-    if (this === unshelved.book[i]) {
-      console.log("Book is already unshelved.");
-      isUnshelved = true;
-      break;
-    }
+LibraryItem.prototype.Add = function (destination) {
+  var isCompleted = false;
+  if (destination.index == null) {
+    console.log(destination.type, ": ", destination.title, " does not contain storage.");
+    isCompleted = true;    
   }
-  if (isUnshelved == false) {
-    unshelved.books.push(this);
-    this.location = unshelved;
-    isUnshelved = true
-    console.log(this.title, "has been unshelved.");
-    for (i = 0; i < campBecca.index.length; i++) {
-      if (this === campBecca.index.i) {
-      console.log("Book is already in the library index.")
+  if (destination.ID == this.location.ID) {
+    console.log("Source is the same as destination (", destination.title, "is the same as", this.location.title, ")");
+    isCompleted = true;
+  }
+  if (destination.ID == this.ID) {
+    console.log("Item cannot be put into itself");
+    isCompleted = true;
+  }
+  if (isCompleted == false) {
+    console.log(this.title, "moved from", this.location.title, "to", destination.title);
+    for (var i = 0; i < this.location.index.length; i++) {
+      if (this.location.index[i].ID == this.ID) {
+        this.location.index.splice(i, 1);
+        destination.index.push(this);
+        this.location = destination; 
+        render(); 
       }
     }
+  }
+};
 
-  // $.each(campBecca.index, function(j) {
-  //   if (i === this) {
-  //     return(false);
-  //   }
-  // });
-  // campBecca.index.push(this);
-  // // needs loop to check if is already in library
-  // this.location = unshelved;
-  // var temp = [];
-  // $.each(campBecca.index, function (j) {
-  //   temp.push(campBecca.index[j].title);
-  // });
-  // console.log("Library index: ", temp)
-  render();
-}};
-
-
-// Book.prototype.unshelve = function() {
-//   var i = this; 
-//   $.each(book.location.book, function (j) {
-//     if (i === this) {
-//       shelf00.book.push(this);
-//       this.location = shelf00;
-//       shelf.book.splice(j,1);
-//       render();
-//     }
-//     return(i !== this);
-//   })
-// };
-
-// THIS LOCAL STORAGE APPROACH DOESN'T WORK. NEED SOMETHING MORE SOPHISTICATED.
-// var save = function() {
-//     var session = JSON.stringify(campBecca);
-//     localStorage.campBecca = session;
-// };
+LibraryItem.prototype.Remove = function () {
+this.Add(unsorted);
+};
 
 var render = function() {
   $('#library').empty();
   $('#select-shelf').empty();
-  $.each(campBecca.shelf, function(i, val) {
-    $('#select-shelf').append('<h3><input type=\"radio\" name="shelf" value=\"' + campBecca.shelf[i].subject + '\">' + campBecca.shelf[i].subject + '</h3>');
+  $.each(campBecca.index, function(i, val) {
+    $('#select-shelf').append('<h3><input type=\"radio\" name="shelf" value=\"' + campBecca.index[i].title + '\">' + campBecca.index[i].title + '</h3>');
   });
-  $.each(campBecca.shelf, function(i, val) {
-    $('#library').append('<li class=\"shelf\" id=\"campBecca' + i + '\"><h2>' + campBecca.shelf[i].subject + '</h2></li>');
-    $.each(campBecca.shelf[i].books, function(j, val) {
-      $('#campBecca' + i).append('<h3 class\"book\">\"' + campBecca.shelf[i].books[j].title + '\" - ' + campBecca.shelf[i].books[j].author + '</h3>')
+  $.each(campBecca.index, function(i, val) {
+    $('#library').append('<li class=\"shelf\" id=\"campBecca' + i + '\"><h2>' + campBecca.index[i].title + '</h2></li>');
+    $.each(campBecca.index[i].index, function(j, val) {
+      $('#campBecca' + i).append('<h3 class\"book\">\"' + campBecca.index[i].index[j].title + '\" - ' + campBecca.index[i].index[j].author + '</h3>')
     })
   })
-  // save()
 };
 
-// if (localStorage.campBecca) {
-//   var campBecca = JSON.parse(localStorage.campBecca);
-// } else {
-  var campBecca = new Library("Camp Becca");
-  var unshelved = new Shelf("Unshelved");
-  var shelf01 = new Shelf("Philosophy");
-  var shelf02 = new Shelf("Books about dogs");
-  var shelf03 = new Shelf("Stuffed animals");
-  var book01 = new Book(1, "Critique of Pure Reason", "Immanuel Kant");
-  var book02 = new Book(2, "Phenomenology of Spirit", "Georg Hegel");
-  var book03 = new Book(3, "Old Yeller", "Fred Gipson");
-  var book04 = new Book(4, "Lassie Come-Home", "Eric Knight");
-  var book05 = new Book(5, "Winnie-The-Pooh", "A. A. Milne");
-  var book06 = new Book(6, "The Very Hungry Caterpillar", "Eric Carle");
+var campBecca = new Library("Camp Becca");
+unsorted.location = campBecca;
+var shelf01 = new LibraryItem();
+var shelf02 = new LibraryItem();
+var shelf03 = new LibraryItem();
+var shelf04 = new LibraryItem();
+var book01 = new LibraryItem();
+var book02 = new LibraryItem();
+var book03 = new LibraryItem();
+var book04 = new LibraryItem();
+var book05 = new LibraryItem();
+var book06 = new LibraryItem();
+var mag01 = new LibraryItem();
+var mag02 = new LibraryItem();
+var CD01 = new LibraryItem();
+var CD02 = new LibraryItem();
+var box01 = new LibraryItem();
+var box02 = new LibraryItem();
 
-  shelf01.addToLibrary(campBecca);
-  shelf02.addToLibrary(campBecca);
-  shelf03.addToLibrary(campBecca);
-  book01.shelve(shelf01);
-  book02.shelve(shelf01);
-  book03.shelve(shelf02);
-  book04.shelve(shelf02);
-  book05.shelve(shelf03);
-  book06.shelve(shelf03);
+shelf01.AssignShelf("Philosophy");
+shelf02.AssignShelf("Books about dogs");
+shelf03.AssignShelf("Stuffed animals");
+shelf04.AssignShelf("Junk shelf");
+book01.AssignBook("Critique of Pure Reason", "Immanuel Kant");
+book02.AssignBook("Phenomenology of Spirit", "Georg Hegel");
+book03.AssignBook("Old Yeller", "Fred Gipson");
+book04.AssignBook("Lassie Come-Home", "Eric Knight");
+book05.AssignBook("Winnie-The-Pooh", "A. A. Milne");
+book06.AssignBook("The Very Hungry Caterpillar", "Eric Carle");
+mag01.AssignMagazine("Muffintop Weekly", 12, 2004);
+mag02.AssignMagazine("Games", 3, 1985);
+CD01.AssignCD("Huey Lewis and the News", "Sports");
+CD02.AssignCD("The Beatles", "The White Album");
+box01.AssignBox("periodicals");
+box02.AssignBox("media");
+
+shelf01.Add(campBecca);
+shelf02.Add(campBecca);
+shelf03.Add(campBecca);
+shelf04.Add(campBecca);
+book01.Add(shelf01);
+book02.Add(shelf01);
+book03.Add(shelf02);
+book04.Add(shelf02);
+book05.Add(shelf03);
+book06.Add(shelf03);
+CD01.Add(box02);
+CD02.Add(box02);
+mag01.Add(box01);
+mag02.Add(box01);
+box01.Add(shelf04);
+box02.Add(shelf04);
 
 render();
-console.log("done");
 
-$('#add-shelf').on({'click': function() {
-  if ($('#subject').val() !== "") {
-    console.log($('#subject').val());
-    var userShelf = new Shelf($('#subject').val());
-    userShelf.addToLibrary(campBecca);
-    render();
-  }
-}});
-
-$('#remove-shelf').on({'click': function() {
-  if ($('#subject').val() !== "") {
-    console.log($('#subject').val());
-    var userShelf = $('#subject').val();
-    // Needs VARIABLE NAME CONCATENATION
-    userShelf.removeFromLibrary(campBecca);
-    render();
-  }
-}});
-
-  $('#add-book').on({'click': function() {
-  console.log(!(($('#title').val()) == "" && ($('author').val() == "")));
-  // console.log($("input:radio[name=shelf]").val() !== "");
-  //   if (!(($('#title').val()) == "" && ($('author').val() == "")) && $("input:radio[name=shelf]").val() !== "") {
-  //     $("input:radio[name=shelf]").on.click(function() {
-  //       console.log($(this).val());
-  //       var destinationShelf = $(this).val();
-  //       console.log(destinationShelf);
-  //       var userBook = new Book($('#title').val(), $('#author').val());
-  //       console.log(userBook);
-  //       destinationShelf.addBook(userBook);
-  //       render();
-  //     }
-    //   )
-    // }
-  }});
-
-// this works for selecting items with the radio buttons.
 $("input:radio[name=shelf]").on({'click': function() {
-  destinationShelf = $(this).val();
-  console.log(destinationShelf);
-  if (!(($('#title').val()) == "" && ($('#author').val() == ""))) {
-    console.log("First pass");
-    $('#add-book').on({'click': function() {
-      userBook = new Book($('#title').val(), $('#author').val());
-      console.log(userBook);
-      userBook.shelve($("input:radio[name=shelf]"))
-      render();
-    }})
-  }
+  var destinationShelf = $(this).val();
+  console.log(destinationShelf); 
 }});
 
-
-//   if (!(($('#title').val()) == "" && ($('author').val() == "")) && $("input:radio[name=shelf]").val() !== "") {
-//     ().addBook($('#title').val(), $('#author').val());
-//     render();
-//   }  
-// }});
-
-  // $("input:radio[name=shelf]").click(function() {
-  //     var destinationShelf = $(this).val();
-  // });
+console.log("Library initialized");
