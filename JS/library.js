@@ -5,18 +5,20 @@ var unsorted = {title:"unsorted", type:"storage", ID:0, index:[]};
 var Library = function(title) {
   this.type = "library";
   this.title = title;
-  this.index = [unsorted];
-  this.IDList = [0];
+  this.index = [];
+  this.IDList = [];
 };
 
-var LibraryItem = function() {
+var LibraryItem = function(branch) {
+  this.branch = branch;
   this.ID;
   this.location = unsorted;
 };
 
-var checkIn = function (libraryItem) { 
-  libraryItem.ID = (campBecca.IDList.length);
-  campBecca.IDList.push(libraryItem);
+var checkIn = function (libraryItem, branch) { 
+  libraryItem.ID = (branch.IDList.length);
+  LibraryItem.branch = branch;
+  branch.IDList.push(libraryItem);
   unsorted.index.push(libraryItem);
 };
 
@@ -101,7 +103,6 @@ var render = function() {
 };
 
 var campBecca = new Library("Camp Becca");
-unsorted.location = campBecca;
 var shelf01 = new LibraryItem();
 var shelf02 = new LibraryItem();
 var shelf03 = new LibraryItem();
