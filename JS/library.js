@@ -87,17 +87,17 @@ this.Add(unsorted);
 };
 
 var render = function() {
-  $('#library').empty();
-  $('#select-shelf').empty();
-  $.each(campBecca.index, function(i, val) {
-    $('#select-shelf').append('<h3><input type=\"radio\" name="shelf" value=\"' + campBecca.index[i].title + '\">' + campBecca.index[i].title + '</h3>');
-  });
-  $.each(campBecca.index, function(i, val) {
-    $('#library').append('<li class=\"shelf\" id=\"campBecca' + i + '\"><h2>' + campBecca.index[i].title + '</h2></li>');
-    $.each(campBecca.index[i].index, function(j, val) {
-      $('#campBecca' + i).append('<h3 class\"book\">\"' + campBecca.index[i].index[j].title + '\" - ' + campBecca.index[i].index[j].author + '</h3>')
-    })
-  })
+//   $('#library').empty();
+//   $('#select-shelf').empty();
+//   $.each(campBecca.index, function(i, val) {
+//     $('#select-shelf').append('<h3><input type=\"radio\" name="shelf" value=\"' + campBecca.index[i].title + '\">' + campBecca.index[i].title + '</h3>');
+//   });
+//   $.each(campBecca.index, function(i, val) {
+//     $('#library').append('<li class=\"shelf\" id=\"campBecca' + i + '\"><h2>' + campBecca.index[i].title + '</h2></li>');
+//     $.each(campBecca.index[i].index, function(j, val) {
+//       $('#campBecca' + i).append('<h3 class\"book\">\"' + campBecca.index[i].index[j].title + '\" - ' + campBecca.index[i].index[j].author + '</h3>')
+//     })
+//   })
 };
 
 var campBecca = new Library("Camp Becca");
@@ -155,9 +155,9 @@ box02.Add(shelf04);
 
 render();
 
-$("input:radio[name=shelf]").on({'click': function() {
-  var destinationShelf = $(this).val();
-  console.log(destinationShelf); 
-}});
+// $("input:radio[name=shelf]").on({'click': function() {
+//   var destinationShelf = $(this).val();
+//   console.log(destinationShelf); 
+// }});
 
 console.log("Library initialized");
